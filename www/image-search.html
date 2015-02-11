@@ -51,26 +51,83 @@
             No results found.
           </div>
 
-          <div class="slider">
-            <div ng-repeat="image in result.images">
-              <input type="radio" name="slide_switch" id="id{{ image.id }}"/>
-              <label for="id{{ image.id }}">
-                <img src="{{ image.display_sizes[0].uri }}" width="100"/>
-              </label>
-              <div class="show-image text-center">
-                <img src="{{ image.display_sizes[0].uri }}"/>
-                <h4>{{ image.title }}</h4>
-                <p>{{ image.caption }}</p>
+          <div class="row">
+            <div class="display col-xs-12" ng-init="active = 0">
+              <div ng-repeat="image in result.images" ng-class="{'image-holder': true, 'image-holder-active': active == $index}">
+                <img class="image" src="{{ image.display_sizes[0].uri }}"/>
               </div>
             </div>
           </div>
+          <div class="row text-center image-title"><div class="col-xs-12">
+            <h3>{{ result.images[active].title }}</h3>
+          </div></div>
+          <div class="row thumb-row">
+             <div ng-repeat="image in result.images"
+                  class="col-xs-2 thumb-holder">
+               <a ng-click="$parent.active = $index">
+                 <img ng-class="{thumb: true, 'thumb-active': active == $index}" src="{{ image.display_sizes[0].uri }}"/>
+               </a>
+             </div>
+          </div>
+
 
           <style>
 
-          .slider {
-            position: relative;
-            padding-top: 320;
+          .display {
             box-shadow: 0 10px 20px -5px rgba(0, 0, 0, 0.75);
+            height: 320px;
+            padding: 10px;
+          }
+
+          .thumb-row {
+            margin-top: 20px;
+            margin-bottom: 20px;
+          }
+
+          .image {
+            height: 100%;
+            margin-left: auto;
+            margin-right: auto;
+            display: block;
+            position: relative;
+            left: -50%;
+          }
+
+          .image-holder {
+            transition: all 0.5s;
+            opacity: 0;
+            transform: scale(1.1);
+            position: absolute;
+            top: 20px;
+            bottom: 20px;
+            left: 50%;
+          }
+
+          .image-title {
+            margin-bottom: 32px;
+          }
+
+          .thumb-holder {
+            margin-bottom: 10px;
+          }
+
+          .col-xs-2.thumb-holder:nth-child(6n+1){
+              clear: left;
+          }
+
+          .image-holder.image-holder-active {
+            opacity: 1;
+            transform: scale(1);
+          }
+
+          .thumb {
+            width: 100%;
+            opacity: 0.6;
+            border-color: #666;
+          }
+
+          .thumb.thumb-active {
+            opacity: 1.0;
           }
 
           .slider div .show-image{
@@ -82,29 +139,7 @@
             transition: all 0.5s;
           }
 
-          .slider div .show-image img {
-            margin-right: auto;
-            margin-left: auto;
-            display: block;
-            max-height: 250px;
-            min-height: 100px;
-          }
-
-          .slider div input[name='slide_switch'] {
-            display: none;
-          }
-
-          .slider div label {
-            margin: 18px 0 0 18px;
-            border: 3px solid #999;
-            float: left;
-            cursor: pointer;
-            transition: all 0.5s;
-            opacity: 0.6;
-          }
-
           .slider div input[name='slide_switch']:checked+label {
-            border-color: #666;
             opacity: 1;
           }
           .slider div input[name='slide_switch'] ~ .show-image {

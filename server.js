@@ -17,6 +17,7 @@ app.all('/search-images', function(req, res) {
     url: "https://api.gettyimages.com/v3/search/images",
     qs: {
       'phrase': req.body.query,
+      'orientations': 'Horizontal',
       'page_size': 10,
     },
     headers: {
