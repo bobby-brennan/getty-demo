@@ -18,7 +18,6 @@ app.all('/search-images', function(req, res) {
     qs: {
       'phrase': req.body.query,
       'orientations': 'Horizontal',
-      'page_size': 10,
     },
     headers: {
       'Api-Key': "jffpb83bhunc75qk2mjpsgrj",
